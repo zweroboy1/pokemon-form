@@ -89,7 +89,7 @@ const TrainerForm = () => {
         <PokemonSelect
           register={register}
           error={errors.team?.message}
-          onPokemonDataChange={(pokemons) => setPokemons(pokemons)} 
+          onPokemonDataChange={(pokemons) => setPokemons(pokemons)}
         />
 
         <button

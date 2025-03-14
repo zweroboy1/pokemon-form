@@ -1,3 +1,4 @@
+import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
 import { Pokemon } from './PokemonSelect';
 interface ModalProps {
   isOpen: boolean;
@@ -32,11 +33,14 @@ const Modal = ({ isOpen, onClose, formData, pokemons }: ModalProps) => {
             return (
               <div key={index} className="flex items-center gap-2 mb-2">
                 <img
-                  src={pokemon?.sprite}
+                  src={pokemon?.sprite.replace(
+                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/',
+                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/',
+                  )}
                   alt={pokemonName}
-                  className="h-8 w-8"
+                  className="h-20 w-20"
                 />
-                <span>{pokemonName}</span>
+                <span>{capitalizeFirstLetter(pokemonName)}</span>
               </div>
             );
           })}

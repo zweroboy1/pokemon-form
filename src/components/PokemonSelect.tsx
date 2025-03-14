@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 import axios from 'axios';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
 
 interface FormData {
   firstName: string;
@@ -21,7 +22,11 @@ export interface Pokemon {
   sprite: string;
 }
 
-const PokemonSelect = ({ register, error, onPokemonDataChange }: PokemonSelectProps) => {
+const PokemonSelect = ({
+  register,
+  error,
+  onPokemonDataChange,
+}: PokemonSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedPokemons, setSelectedPokemons] = useState<string[]>([]);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
@@ -31,7 +36,9 @@ const PokemonSelect = ({ register, error, onPokemonDataChange }: PokemonSelectPr
   useEffect(() => {
     const fetchPokemons = async () => {
       try {
-        const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=50');
+        const response = await axios.get(
+          'https://pokeapi.co/api/v2/pokemon?limit=50',
+        );
         const pokemonData = response.data.results.map((pokemon: Pokemon) => ({
           ...pokemon,
           sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
@@ -51,10 +58,6 @@ const PokemonSelect = ({ register, error, onPokemonDataChange }: PokemonSelectPr
   const filteredPokemons = pokemons.filter((pokemon) =>
     pokemon.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
-
-  const capitalizeFirstLetter = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -125,7 +128,7 @@ const PokemonSelect = ({ register, error, onPokemonDataChange }: PokemonSelectPr
               />
               {searchQuery && (
                 <button
-                  onClick={() => setSearchQuery("")}
+                  onClick={() => setSearchQuery('')}
                   className="ml-2 p-1 text-gray-500 hover:text-gray-700"
                 >
                   <XMarkIcon className="h-5 w-5" />
@@ -140,7 +143,7 @@ const PokemonSelect = ({ register, error, onPokemonDataChange }: PokemonSelectPr
                 key={pokemon.name}
                 onClick={() => handleSelectPokemon(pokemon.name)}
                 className={`p-2 hover:bg-gray-100 cursor-pointer flex items-center gap-2 ${
-                  selectedPokemons.includes(pokemon.name) ? "bg-blue-100" : ""
+                  selectedPokemons.includes(pokemon.name) ? 'bg-blue-100' : ''
                 }`}
               >
                 <img
