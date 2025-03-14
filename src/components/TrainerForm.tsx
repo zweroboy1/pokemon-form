@@ -97,7 +97,7 @@ const TrainerForm = () => {
           disabled={!isValid}
           className={`w-full rounded px-4 py-2 text-white transition ${
             isValid
-              ? 'bg-blue-500 hover:bg-blue-600'
+              ? 'bg-blue-500 hover:bg-blue-600 cursor-pointer'
               : 'bg-gray-400 cursor-not-allowed'
           }`}
         >
