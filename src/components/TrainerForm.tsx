@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import axios from 'axios';
 import PokemonSelect, { Pokemon } from './PokemonSelect';
 import Modal from './Modal';
 
@@ -43,27 +42,6 @@ const TrainerForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState<FormData | null>(null);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-
-  useEffect(() => {
-    const fetchPokemons = async () => {
-      try {
-        const response = await axios.get(
-          'https://pokeapi.co/api/v2/pokemon?limit=50',
-        );
-        const pokemonData = response.data.results.map((pokemon: Pokemon) => ({
-          ...pokemon,
-          sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-            pokemon.url.split('/')[6]
-          }.png`,
-        }));
-        setPokemons(pokemonData);
-      } catch (error) {
-        console.error('Error fetching Pokémon data:', error);
-      }
-    };
-
-    fetchPokemons();
-  }, []);
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     setFormData(data);
@@ -108,7 +86,11 @@ const TrainerForm = () => {
           </p>
         </div>
 
-        <PokemonSelect register={register} error={errors.team?.message} />
+        <PokemonSelect
+          register={register}
+          error={errors.team?.message}
+          onPokemonDataChange={(pokemons) => setPokemons(pokemons)} 
+        />
 
         <button
           type="submit"

@@ -8,9 +8,11 @@ interface FormData {
   lastName: string;
   team?: string[];
 }
+
 interface PokemonSelectProps {
   register: UseFormRegister<FormData>;
   error?: string;
+  onPokemonDataChange: (pokemons: Pokemon[]) => void;
 }
 
 export interface Pokemon {
@@ -19,7 +21,7 @@ export interface Pokemon {
   sprite: string;
 }
 
-const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
+const PokemonSelect = ({ register, error, onPokemonDataChange }: PokemonSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedPokemons, setSelectedPokemons] = useState<string[]>([]);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
@@ -29,9 +31,7 @@ const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
   useEffect(() => {
     const fetchPokemons = async () => {
       try {
-        const response = await axios.get(
-          'https://pokeapi.co/api/v2/pokemon?limit=50',
-        );
+        const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=50');
         const pokemonData = response.data.results.map((pokemon: Pokemon) => ({
           ...pokemon,
           sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
@@ -39,6 +39,7 @@ const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
           }.png`,
         }));
         setPokemons(pokemonData);
+        onPokemonDataChange(pokemonData);
       } catch (error) {
         console.error('Error fetching Pokémon data:', error);
       }
@@ -124,7 +125,7 @@ const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
               />
               {searchQuery && (
                 <button
-                  onClick={() => setSearchQuery('')}
+                  onClick={() => setSearchQuery("")}
                   className="ml-2 p-1 text-gray-500 hover:text-gray-700"
                 >
                   <XMarkIcon className="h-5 w-5" />
@@ -139,7 +140,7 @@ const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
                 key={pokemon.name}
                 onClick={() => handleSelectPokemon(pokemon.name)}
                 className={`p-2 hover:bg-gray-100 cursor-pointer flex items-center gap-2 ${
-                  selectedPokemons.includes(pokemon.name) ? 'bg-blue-100' : ''
+                  selectedPokemons.includes(pokemon.name) ? "bg-blue-100" : ""
                 }`}
               >
                 <img
