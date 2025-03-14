@@ -95,10 +95,10 @@ const TrainerForm = () => {
         <button
           type="submit"
           disabled={!isValid}
-          className={`w-full rounded px-4 py-2 text-white transition ${
+          className={`w-full rounded px-4 py-2 transition ${
             isValid
-              ? 'bg-blue-500 hover:bg-blue-600 cursor-pointer'
-              : 'bg-gray-400 cursor-not-allowed'
+              ? 'bg-[#4724c7] text-white hover:bg-[#1724c7]  focus:ring-2 focus:ring-[#4724c7] focus:ring-offset-2  cursor-pointer'
+              : 'bg-[#eef2ff] text-[#c6d2fe] cursor-not-allowed'
           }`}
         >
           Submit

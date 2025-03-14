@@ -20,7 +20,10 @@ const Modal = ({ isOpen, onClose, formData, pokemons }: ModalProps) => {
       <div className="flex flex-col gap-7 bg-white rounded-lg p-6 min-h-80 min-w-80">
         <div className="flex justify-between">
           <p className="text-xl font-bold">Trainer Information</p>
-          <button onClick={onClose} className="text-black flex font-bold text-2xl cursor-pointer">
+          <button
+            onClick={onClose}
+            className="text-black flex font-bold text-2xl cursor-pointer"
+          >
             x
           </button>
         </div>
@@ -35,7 +38,10 @@ const Modal = ({ isOpen, onClose, formData, pokemons }: ModalProps) => {
           {formData.team.map((pokemonName, index) => {
             const pokemon = pokemons.find((p) => p.name === pokemonName);
             return (
-              <div key={index} className="flex flex-col items-center gap-2 p-2 border rounded-lg shadow-sm">
+              <div
+                key={index}
+                className="flex flex-col items-center gap-2 p-2 border rounded-lg shadow-sm"
+              >
                 <img
                   src={pokemon?.sprite.replace(
                     'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/',
@@ -55,13 +61,13 @@ const Modal = ({ isOpen, onClose, formData, pokemons }: ModalProps) => {
         <div className="flex justify-end gap-5">
           <button
             onClick={onClose}
-            className="hover:bg-purple-500 text-white px-4 py-2 rounded-md bg-purple-600 w-6/12 cursor-pointer"
+            className="w-6/12 rounded-md px-4 py-2 text-white transition bg-[#4724c7] hover:bg-[#6466f1] focus:ring-2 focus:ring-[#4724c7] focus:ring-offset-2 cursor-pointer"
           >
             Cancel
           </button>
           <button
             onClick={onClose}
-            className="hover:bg-purple-500 text-white px-4 py-2 rounded-md bg-purple-600 w-6/12 cursor-pointer"
+            className="w-6/12 rounded-md px-4 py-2 text-white transition bg-[#4724c7] hover:bg-[#6466f1] focus:ring-2 focus:ring-[#4724c7] focus:ring-offset-2 cursor-pointer"
           >
             Save
           </button>

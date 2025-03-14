@@ -1,14 +1,14 @@
 import React from 'react';
 import TrainerForm from './components/TrainerForm';
 import LunaEdgeLogo from './assets/logos/LunaEdgeLogo.svg?react';
-import GitHubLogo from './assets/logos/Octicons-mark-github.svg?react'; 
+import GitHubLogo from './assets/logos/Octicons-mark-github.svg?react';
 
 function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-gray-800 py-6">
         <div className="container mx-auto flex justify-center">
-          <LunaEdgeLogo className="w-48 h-auto" /> 
+          <LunaEdgeLogo className="w-48 h-auto" />
         </div>
       </header>
 
@@ -26,10 +26,10 @@ function App() {
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-white hover:text-gray-300 transition-colors"
           >
-            <GitHubLogo className="w-6 h-6" /> 
+            <GitHubLogo className="w-6 h-6" />
             <span>zweroboy1</span>
           </a>
-          <p className="text-white text-sm">© 2025</p> 
+          <p className="text-white text-sm">© 2025</p>
         </div>
       </footer>
     </div>

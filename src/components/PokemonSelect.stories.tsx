@@ -27,7 +27,7 @@ const Template: StoryFn<typeof PokemonSelect> = (args) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <PokemonSelect
         {...args}
-        register={register as UseFormRegister<FormData>} 
+        register={register as UseFormRegister<FormData>}
       />
       <button type="submit">Submit</button>
     </form>
@@ -36,7 +36,8 @@ const Template: StoryFn<typeof PokemonSelect> = (args) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  onPokemonDataChange: (pokemons) => console.log('Pokemon Data Changed:', pokemons),
+  onPokemonDataChange: (pokemons) =>
+    console.log('Pokemon Data Changed:', pokemons),
 };
 
 export const WithError = Template.bind({});
