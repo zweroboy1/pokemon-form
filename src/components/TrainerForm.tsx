@@ -1,24 +1,23 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
+import PokemonSelect from "./PokemonSelect";
 
 const schema = yup.object({
   firstName: yup
     .string()
     .required("First name is required")
-    .matches(/^[a-zA-Z]+$/, "Only alphabets are allowed")
+    .matches(/^[a-zA-Z]+$/, "Only latin letters are allowed")
     .min(2, "Must be at least 2 characters")
     .max(12, "Must be at most 12 characters"),
   lastName: yup
     .string()
     .required("Last name is required")
-    .matches(/^[a-zA-Z]+$/, "Only alphabets are allowed")
+    .matches(/^[a-zA-Z]+$/, "Only latin letters are allowed")
     .min(2, "Must be at least 2 characters")
     .max(12, "Must be at most 12 characters"),
   team: yup
-    .array()
-    .of(yup.string())
+    .array(yup.string().required())
     .min(4, "Select exactly 4 Pokémon")
     .max(4, "Select exactly 4 Pokémon"),
 });
@@ -31,6 +30,7 @@ const TrainerForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
+    mode: "onChange",
     resolver: yupResolver(schema),
   });
 
@@ -47,7 +47,7 @@ const TrainerForm = () => {
         <h2 className="mb-6 text-center text-2xl font-semibold text-gray-800">
           Pokémon Trainer Form
         </h2>
-        <div className="mb-6 relative">
+        <div className="mb-8 relative">
           <label className="mb-1 block text-sm font-medium text-gray-700">
             First Name
           </label>
@@ -59,7 +59,7 @@ const TrainerForm = () => {
             {errors.firstName?.message}
           </p>
         </div>
-        <div className="mb-6 relative">
+        <div className="mb-8 relative">
           <label className="mb-1 block text-sm font-medium text-gray-700">
             Last Name
           </label>
@@ -71,6 +71,9 @@ const TrainerForm = () => {
             {errors.lastName?.message}
           </p>
         </div>
+
+        <PokemonSelect register={register} error={errors.team?.message} />
+
         <button
           type="submit"
           className="w-full rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
