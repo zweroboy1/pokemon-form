@@ -8,13 +8,12 @@ interface FormData {
   lastName: string;
   team?: string[];
 }
-
 interface PokemonSelectProps {
   register: UseFormRegister<FormData>;
   error?: string;
 }
 
-interface Pokemon {
+export interface Pokemon {
   name: string;
   url: string;
   sprite: string;

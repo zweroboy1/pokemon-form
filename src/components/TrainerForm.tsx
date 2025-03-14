@@ -1,7 +1,10 @@
+import { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import PokemonSelect from './PokemonSelect';
+import axios from 'axios';
+import PokemonSelect, { Pokemon } from './PokemonSelect';
+import Modal from './Modal';
 
 const schema = yup.object({
   firstName: yup
@@ -37,8 +40,38 @@ const TrainerForm = () => {
     },
   });
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState<FormData | null>(null);
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+
+  useEffect(() => {
+    const fetchPokemons = async () => {
+      try {
+        const response = await axios.get(
+          'https://pokeapi.co/api/v2/pokemon?limit=50',
+        );
+        const pokemonData = response.data.results.map((pokemon: Pokemon) => ({
+          ...pokemon,
+          sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+            pokemon.url.split('/')[6]
+          }.png`,
+        }));
+        setPokemons(pokemonData);
+      } catch (error) {
+        console.error('Error fetching Pokémon data:', error);
+      }
+    };
+
+    fetchPokemons();
+  }, []);
+
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
+    setFormData(data);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -89,6 +122,19 @@ const TrainerForm = () => {
           Submit
         </button>
       </form>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        formData={
+          (formData || { firstName: '', lastName: '', team: [] }) as {
+            firstName: string;
+            lastName: string;
+            team: string[];
+          }
+        }
+        pokemons={pokemons}
+      />
     </div>
   );
 };
