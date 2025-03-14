@@ -67,8 +67,16 @@ const TrainerForm = () => {
           </label>
           <input
             {...register('firstName')}
-            className="w-full rounded border p-2 text-gray-700 focus:border-blue-500 focus:outline-none"
+            className={`w-full rounded border p-2 text-black placeholder-[#c1bfc8] focus:outline-3 focus:outline-[#4724c7]  ${
+              errors.firstName
+                ? 'border-[#f98f90] focus:outline-3 focus:outline-[#f98f90] '
+                : 'border-[#c1bfc8]'
+            }`}
+            placeholder="Enter your first name"
           />
+          <p className="absolute left-0 top-full mt-1 text-sm text-[#f98f90]">
+            {errors.firstName?.message}
+          </p>
           <p className="absolute left-0 top-full mt-1 text-sm text-red-500">
             {errors.firstName?.message}
           </p>
@@ -79,7 +87,12 @@ const TrainerForm = () => {
           </label>
           <input
             {...register('lastName')}
-            className="w-full rounded border p-2 text-gray-700 focus:border-blue-500 focus:outline-none"
+            className={`w-full rounded border p-2 text-black placeholder-[#c1bfc8] focus:outline-3 focus:outline-[#4724c7]  ${
+              errors.lastName
+                ? 'border-[#f98f90] focus:outline-3 focus:outline-[#f98f90] '
+                : 'border-[#c1bfc8]'
+            }`}
+            placeholder="Enter your last name"
           />
           <p className="absolute left-0 top-full mt-1 text-sm text-red-500">
             {errors.lastName?.message}

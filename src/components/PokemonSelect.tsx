@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 import axios from 'axios';
-import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { ChevronUpDownIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
 
 interface FormData {
@@ -98,7 +98,11 @@ const PokemonSelect = ({
       </label>
       <div
         onClick={toggleDropdown}
-        className="w-full rounded border p-2 text-gray-700 focus:border-blue-500 focus:outline-none cursor-pointer flex items-center justify-between"
+        className={`w-full rounded border border-[#c1bfc8] p-2 text-gray-700 focus:outline-none cursor-pointer flex items-center justify-between ${
+          error
+            ? 'border-[#f98f90] focus:outline-3 focus:outline-[#f98f90]'
+            : 'border-[#c1bfc8]'
+        }`}
       >
         <div className="flex flex-wrap items-center gap-2 flex-1">
           {selectedPokemons.length > 0 ? (
@@ -121,13 +125,13 @@ const PokemonSelect = ({
               </div>
             ))
           ) : (
-            <span>Choose Pokémon</span>
+            <span className={'text-[#c1bfc8]'}>Choose Pokémon</span>
           )}
         </div>
-        <MagnifyingGlassIcon className="h-5 w-5 text-gray-500" />
+        <ChevronUpDownIcon className="h-5 w-5 text-gray-500" />
       </div>
       {isOpen && (
-        <div className="absolute z-10 w-full rounded border bg-white shadow-lg mt-1">
+        <div className="absolute z-10 w-full rounded border border-[#c1bfc8] bg-white shadow-lg mt-1">
           <div className="p-2 border-b">
             <div className="flex items-center">
               <input
@@ -135,7 +139,9 @@ const PokemonSelect = ({
                 placeholder="Search Pokémon..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full p-2 rounded border focus:outline-none focus:border-blue-500"
+                className={
+                  'w-full p-2 rounded border text-black placeholder-[#c1bfc8] focus:outline-3 focus:outline-[#4724c7] border-[#c1bfc8]'
+                }
               />
               {searchQuery && (
                 <button
