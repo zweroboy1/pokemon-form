@@ -17,6 +17,7 @@ interface PokemonSelectProps {
 interface Pokemon {
   name: string;
   url: string;
+  sprite: string; 
 }
 
 const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
@@ -29,8 +30,14 @@ const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
   useEffect(() => {
     const fetchPokemons = async () => {
       try {
-        const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=100");
-        setPokemons(response.data.results);
+        const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=50");
+        const pokemonData = response.data.results.map((pokemon: Pokemon) => ({
+          ...pokemon,
+          sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+            pokemon.url.split("/")[6]
+          }.png`, 
+        }));
+        setPokemons(pokemonData);
       } catch (error) {
         console.error("Error fetching Pokémon data:", error);
       }
@@ -42,6 +49,10 @@ const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
   const filteredPokemons = pokemons.filter((pokemon) =>
     pokemon.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const capitalizeFirstLetter = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -75,9 +86,25 @@ const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
         onClick={toggleDropdown}
         className="w-full rounded border p-2 text-gray-700 focus:border-blue-500 focus:outline-none cursor-pointer flex items-center justify-between"
       >
-        <span>
-          {selectedPokemons.length > 0 ? selectedPokemons.join(", ") : "Choose Pokémon"}
-        </span>
+        <div className="flex items-center gap-10 overflow-x-auto flex-1">
+          {selectedPokemons.length > 0 ? (
+            selectedPokemons.map((pokemon) => {
+              const selectedPokemon = pokemons.find((p) => p.name === pokemon);
+              return (
+                <div key={pokemon} className="flex items-center gap-1 mb-1">
+                  <img
+                    src={selectedPokemon?.sprite}
+                    alt={pokemon}
+                    className="h-6 w-6"
+                  />
+                  <span>{capitalizeFirstLetter(pokemon)}</span>
+                </div>
+              );
+            })
+          ) : (
+            <span>Choose Pokémon</span>
+          )}
+        </div>
         <MagnifyingGlassIcon className="h-5 w-5 text-gray-500" />
       </div>
       {isOpen && (
@@ -107,11 +134,16 @@ const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
               <div
                 key={pokemon.name}
                 onClick={() => handleSelectPokemon(pokemon.name)}
-                className={`p-2 hover:bg-gray-100 cursor-pointer ${
+                className={`p-2 hover:bg-gray-100 cursor-pointer flex items-center gap-2 ${
                   selectedPokemons.includes(pokemon.name) ? "bg-blue-100" : ""
                 }`}
               >
-                {pokemon.name}
+                <img
+                  src={pokemon.sprite}
+                  alt={pokemon.name}
+                  className="h-6 w-6"
+                />
+                <span>{capitalizeFirstLetter(pokemon.name)}</span>
               </div>
             ))}
           </div>
