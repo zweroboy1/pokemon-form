@@ -15,11 +15,7 @@ const meta: Meta<typeof PokemonSelect> = {
 export default meta;
 
 const Template: StoryFn<typeof PokemonSelect> = (args) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+  const { register, handleSubmit } = useForm<FormData>();
 
   const onSubmit = (data: FormData) => console.log(data);
 
