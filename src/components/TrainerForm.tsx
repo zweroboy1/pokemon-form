@@ -53,7 +53,7 @@ const TrainerForm = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+    <div className="flex items-center justify-center bg-gray-100 p-4 min-w-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md rounded-lg bg-white p-6 shadow-md"

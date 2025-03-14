@@ -20,7 +20,7 @@ const Modal = ({ isOpen, onClose, formData, pokemons }: ModalProps) => {
       <div className="flex flex-col gap-7 bg-white rounded-lg p-6 min-h-80 min-w-80">
         <div className="flex justify-between">
           <p className="text-xl font-bold">Trainer Information</p>
-          <button onClick={onClose} className="text-black flex font-bold text-2xl">
+          <button onClick={onClose} className="text-black flex font-bold text-2xl cursor-pointer">
             x
           </button>
         </div>
