@@ -1,11 +1,11 @@
-import TrainerForm from './components/TrainerForm'
+import TrainerForm from './components/TrainerForm';
 
 function App() {
   return (
     <div>
-      <TrainerForm/>
+      <TrainerForm />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

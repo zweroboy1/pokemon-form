@@ -1,25 +1,25 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import PokemonSelect from "./PokemonSelect";
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import PokemonSelect from './PokemonSelect';
 
 const schema = yup.object({
   firstName: yup
     .string()
-    .required("First name is required")
-    .matches(/^[a-zA-Z]+$/, "Only latin letters are allowed")
-    .min(2, "Must be at least 2 characters")
-    .max(12, "Must be at most 12 characters"),
+    .required('First name is required')
+    .matches(/^[a-zA-Z]+$/, 'Only latin letters are allowed')
+    .min(2, 'Must be at least 2 characters')
+    .max(12, 'Must be at most 12 characters'),
   lastName: yup
     .string()
-    .required("Last name is required")
-    .matches(/^[a-zA-Z]+$/, "Only latin letters are allowed")
-    .min(2, "Must be at least 2 characters")
-    .max(12, "Must be at most 12 characters"),
+    .required('Last name is required')
+    .matches(/^[a-zA-Z]+$/, 'Only latin letters are allowed')
+    .min(2, 'Must be at least 2 characters')
+    .max(12, 'Must be at most 12 characters'),
   team: yup
     .array(yup.string().required())
-    .min(4, "Select exactly 4 Pokémon")
-    .max(4, "Select exactly 4 Pokémon"),
+    .min(4, 'Select exactly 4 Pokémon')
+    .max(4, 'Select exactly 4 Pokémon'),
 });
 
 type FormData = yup.InferType<typeof schema>;
@@ -30,11 +30,11 @@ const TrainerForm = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<FormData>({
-    mode: "onChange",
+    mode: 'onChange',
     resolver: yupResolver(schema),
     defaultValues: {
-     team: [],
-    }
+      team: [],
+    },
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -55,7 +55,7 @@ const TrainerForm = () => {
             First Name
           </label>
           <input
-            {...register("firstName")}
+            {...register('firstName')}
             className="w-full rounded border p-2 text-gray-700 focus:border-blue-500 focus:outline-none"
           />
           <p className="absolute left-0 top-full mt-1 text-sm text-red-500">
@@ -67,7 +67,7 @@ const TrainerForm = () => {
             Last Name
           </label>
           <input
-            {...register("lastName")}
+            {...register('lastName')}
             className="w-full rounded border p-2 text-gray-700 focus:border-blue-500 focus:outline-none"
           />
           <p className="absolute left-0 top-full mt-1 text-sm text-red-500">
@@ -81,7 +81,9 @@ const TrainerForm = () => {
           type="submit"
           disabled={!isValid}
           className={`w-full rounded px-4 py-2 text-white transition ${
-            isValid ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-400 cursor-not-allowed"
+            isValid
+              ? 'bg-blue-500 hover:bg-blue-600'
+              : 'bg-gray-400 cursor-not-allowed'
           }`}
         >
           Submit

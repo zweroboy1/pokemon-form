@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import { UseFormRegister } from "react-hook-form";
-import axios from "axios";
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { useState, useEffect, useRef } from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import axios from 'axios';
+import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
 interface FormData {
   firstName: string;
@@ -17,29 +17,31 @@ interface PokemonSelectProps {
 interface Pokemon {
   name: string;
   url: string;
-  sprite: string; 
+  sprite: string;
 }
 
 const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedPokemons, setSelectedPokemons] = useState<string[]>([]);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchPokemons = async () => {
       try {
-        const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=50");
+        const response = await axios.get(
+          'https://pokeapi.co/api/v2/pokemon?limit=50',
+        );
         const pokemonData = response.data.results.map((pokemon: Pokemon) => ({
           ...pokemon,
           sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-            pokemon.url.split("/")[6]
-          }.png`, 
+            pokemon.url.split('/')[6]
+          }.png`,
         }));
         setPokemons(pokemonData);
       } catch (error) {
-        console.error("Error fetching Pokémon data:", error);
+        console.error('Error fetching Pokémon data:', error);
       }
     };
 
@@ -47,7 +49,7 @@ const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
   }, []);
 
   const filteredPokemons = pokemons.filter((pokemon) =>
-    pokemon.name.toLowerCase().includes(searchQuery.toLowerCase())
+    pokemon.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const capitalizeFirstLetter = (str: string) => {
@@ -61,19 +63,22 @@ const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
       ? selectedPokemons.filter((p) => p !== pokemon)
       : [...selectedPokemons, pokemon];
     setSelectedPokemons(newSelected);
-    register("team").onChange({ target: { value: newSelected, name: "team" } });
+    register('team').onChange({ target: { value: newSelected, name: 'team' } });
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -120,7 +125,7 @@ const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
               />
               {searchQuery && (
                 <button
-                  onClick={() => setSearchQuery("")}
+                  onClick={() => setSearchQuery('')}
                   className="ml-2 p-1 text-gray-500 hover:text-gray-700"
                 >
                   <XMarkIcon className="h-5 w-5" />
@@ -135,7 +140,7 @@ const PokemonSelect = ({ register, error }: PokemonSelectProps) => {
                 key={pokemon.name}
                 onClick={() => handleSelectPokemon(pokemon.name)}
                 className={`p-2 hover:bg-gray-100 cursor-pointer flex items-center gap-2 ${
-                  selectedPokemons.includes(pokemon.name) ? "bg-blue-100" : ""
+                  selectedPokemons.includes(pokemon.name) ? 'bg-blue-100' : ''
                 }`}
               >
                 <img
