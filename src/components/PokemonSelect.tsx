@@ -69,6 +69,12 @@ const PokemonSelect = ({
     register('team').onChange({ target: { value: newSelected, name: 'team' } });
   };
 
+  const handleRemovePokemon = (pokemon: string) => {
+    const newSelected = selectedPokemons.filter((p) => p !== pokemon);
+    setSelectedPokemons(newSelected);
+    register('team').onChange({ target: { value: newSelected, name: 'team' } });
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -94,21 +100,26 @@ const PokemonSelect = ({
         onClick={toggleDropdown}
         className="w-full rounded border p-2 text-gray-700 focus:border-blue-500 focus:outline-none cursor-pointer flex items-center justify-between"
       >
-        <div className="flex items-center gap-10 overflow-x-auto flex-1">
+        <div className="flex flex-wrap items-center gap-2 flex-1">
           {selectedPokemons.length > 0 ? (
-            selectedPokemons.map((pokemon) => {
-              const selectedPokemon = pokemons.find((p) => p.name === pokemon);
-              return (
-                <div key={pokemon} className="flex items-center gap-1 mb-1">
-                  <img
-                    src={selectedPokemon?.sprite}
-                    alt={pokemon}
-                    className="h-6 w-6"
-                  />
-                  <span>{capitalizeFirstLetter(pokemon)}</span>
-                </div>
-              );
-            })
+            selectedPokemons.map((pokemon) => (
+              <div
+                key={pokemon}
+                className="flex items-center gap-1 bg-[#f4f4f6] rounded-full px-3 py-1 text-sm text-black cursor-default"
+              >
+                <span>{capitalizeFirstLetter(pokemon)}</span>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRemovePokemon(pokemon);
+                  }}
+                  className="text-[#9ca2ae] hover:text-[#6b7280] cursor-pointer"
+                >
+                  <XMarkIcon className="h-4 w-4 hover:text-[#6b7280]" />
+                </button>
+              </div>
+            ))
           ) : (
             <span>Choose Pokémon</span>
           )}
