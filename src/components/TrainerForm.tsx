@@ -39,19 +39,46 @@ const TrainerForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <div>
-        <label>First Name</label>
-        <input {...register("firstName")} />
-        {errors.firstName && <p>{errors.firstName.message}</p>}
-      </div>
-      <div>
-        <label>Last Name</label>
-        <input {...register("lastName")} />
-        {errors.lastName && <p>{errors.lastName.message}</p>}
-      </div>
-      <button type="submit">Submit</button>
-    </form>
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-md rounded-lg bg-white p-6 shadow-md"
+      >
+        <h2 className="mb-6 text-center text-2xl font-semibold text-gray-800">
+          Pokémon Trainer Form
+        </h2>
+        <div className="mb-6 relative">
+          <label className="mb-1 block text-sm font-medium text-gray-700">
+            First Name
+          </label>
+          <input
+            {...register("firstName")}
+            className="w-full rounded border p-2 text-gray-700 focus:border-blue-500 focus:outline-none"
+          />
+          <p className="absolute left-0 top-full mt-1 text-sm text-red-500">
+            {errors.firstName?.message}
+          </p>
+        </div>
+        <div className="mb-6 relative">
+          <label className="mb-1 block text-sm font-medium text-gray-700">
+            Last Name
+          </label>
+          <input
+            {...register("lastName")}
+            className="w-full rounded border p-2 text-gray-700 focus:border-blue-500 focus:outline-none"
+          />
+          <p className="absolute left-0 top-full mt-1 text-sm text-red-500">
+            {errors.lastName?.message}
+          </p>
+        </div>
+        <button
+          type="submit"
+          className="w-full rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
   );
 };
 
