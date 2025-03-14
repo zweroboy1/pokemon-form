@@ -28,10 +28,13 @@ const TrainerForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormData>({
     mode: "onChange",
     resolver: yupResolver(schema),
+    defaultValues: {
+     team: [],
+    }
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -76,7 +79,10 @@ const TrainerForm = () => {
 
         <button
           type="submit"
-          className="w-full rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
+          disabled={!isValid}
+          className={`w-full rounded px-4 py-2 text-white transition ${
+            isValid ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-400 cursor-not-allowed"
+          }`}
         >
           Submit
         </button>
